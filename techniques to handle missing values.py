@@ -295,3 +295,5 @@ df.head()
 df=df.drop(['BsmtQual','GarageType','FireplaceQu'],axis=1)
 df.head()
 #we can replace in the same column no problem
+
+
