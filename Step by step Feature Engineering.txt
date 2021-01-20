@@ -1,0 +1,50 @@
+Step by step feature Engineering
+
+1.differentiate b/t numeric and labeled features
+2.first handle numeric data	Microai@1234 kuntinathnoraje@gmail.com
+	a]fill nan values
+		random sampling
+		mean/median/mode
+		capture nan with new feature
+		End of distribution
+		Arbitary value imputation
+	b]Check for Outliers
+		Guassian Distribution
+		IQR
+		BOXCOX
+	c]Feature scaling 
+		1.Standardisation and Normalization
+		2.scaling to minimum and maximum
+		3.Scaling to median and Quantile
+		4.Guassian transformation	(check distribution of the data)
+			  log transformation
+			  Resiprocal transformation
+			  Square_root transformation
+			  BoxCox transformation
+
+		feature scaling is required for only some of the ML models
+		and for all Deep learning models
+		
+
+3.Handle categorical data
+	a]Fill nan labels
+		most Frequent labels
+		Adding a variable to capture nan
+	b]handle categorical features(Encoding)
+		i]nominal data
+			OneHotEncoding
+			OneHotEncoding with many features(top-10 labels)
+			mean Encoding
+		ii]ordinal data
+			Label Encoding
+			Target Guided ordinal encoding
+		Count or Frequency Encoding
+		Probability ratio Encoding
+
+4.check for imbalanced dataset
+	if dataset is imbalanced:-
+		i]Under sampling
+		ii]over sampling
+		iii]SMOTE technique
+		iv]Ensemble technique
+		v]Random forest classifier technique
