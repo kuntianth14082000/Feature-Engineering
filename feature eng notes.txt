@@ -1,0 +1,258 @@
+Feature Engineering Index:-
+	1.OneHotEncoding With many features(KDD-89)
+	2.Different types of feature Encoding
+	3.Why Feature scaling ?
+	4.handling missing values in categorical features.
+	5.handling categorical features with many labels(select top-10 labels).
+	6.How to handle ordinal categorical variables.
+	7.Guassian transformation
+	9.handling missing values
+		a]Random sample imputation
+		b]capturing nan with new feature
+		c]End of distribution impputation
+		d]Arbitary value imputation
+	10.Handling categorical missing values
+		a]Frequent category imputation
+		b]Adding a variable to capture nan
+	11.Handle categorical Feature(encoding)
+		a]OneHotEncodng
+		b]ordinal Number Encoding(week day)
+		c]Count or Frequency Encoding(replace labels with their frequency)
+		d]Target guided ordinal Encoding
+		e]mean Encoding(replace labels with theire mean values)
+		f]Probability ratio Encoding
+	12.Transforamtion of data
+	13.Imbalanced dataset
+	14.Outlier
+
+
+
+
+#---------------------------------------------------------------------
+#one hot encoding
+
+#Types of Encoding
+1.Nominal Encoding
+2.Ordinal Encoding
+
+	1.Nominal - here we don't have to worry about rank.
+		Ex- gender: male,femel states: karntk,mh,tn
+	2.Ordinal - here we have to worry about rank.
+		Ex- Education: B.E,Masters,PHD,Bcom
+
+
+	1.Nominal Encoding have 3 types :
+		i.One Hot Encoding
+		ii.One Hot Encoding with many features  (take top 10 labels only)
+		iii.Mean Encoding			(replace labels with mean values)
+	2.Ordinal Encoding have 2 types :
+		i.Label Encoding   			(replace labels with their order number's) 
+		ii.Target guided Encoding
+
+	i.One Hot Encoding : 
+		it is apply to nominal categorical variable.
+		here how many categories present that many columns were created.
+
+#why we use Feature Scaling ?
+-> to scale down the data, in some of the cases like KNN k-means...
+ we have not to use in some of the cases like Random forest,Ensemble learning,XGBoost
+
+#How to handle missing values in categorical variables ?
+->the ways to fill missing values :
+	1.delete the row
+	2.Replace with the most frequent value.
+	3.Apply classifier algorith to predict the value
+	4.Apply unsuperwised ML(Clusturing)
+
+#How to handle categorical features 
+
+
+#GUassian distribution
+
+##Techniques to handle categorical features
+	#types of Encoding
+	1.Ordinal number Encoding
+		EX-week days
+	2.Count of frequency Encoding
+		here we replace labels with their frequencies
+
+	3.Target guided Ordinal Encoding
+		here based on the target feature we count frequency of each label of column
+    		and  according to sort we give order values to label.
+	4.mean encoding
+		here we replace labels with their mean value
+	5.probability ratio encoding
+		here we replace labels with their probability ratio(based on target guided)
+
+#Transformation
+types of transformation
+1.Standardisation and Normalization
+2.scaling to minimum and maximum
+3.Scaling to median and Quantile
+4.Guassian transformation
+  log transformation
+  Resiprocal transformation
+  Square_root transformation
+  BoxCox transformation
+
+transformation can be apply for discreate values also,and continues alse
+
+1.Standardization
+    z=(x-mean)/std
+
+2.MinMax Scaling
+        transforms values b/t 0-1
+        it is mostly used in Deep learning
+        it effects on outliers
+
+    X_scaled=(x-x_min)/(_min-x_max)       
+
+3.Scaling to median and Quantile(Robust scaling)
+        
+    IQR=75th quantile - 25th quantile
+    x_scaled=(x-x_median)/IQR
+    
+    [0,1,2,3,4,5,6,7,8,9]
+    9--90-percentile 90% all values in this group less than 9
+    1--10%
+
+it is robust(prevents) to the outlier
+
+4.Guassian transformation
+    *it data is not normally distributed then we can apply some mathematica calculation
+    and convert that data into normal distribution.
+    *some  of the ML algorithms like linear_reg, Logistic_reg assumes that
+    data is normally distributed.
+    *accuracy
+    *good performance
+    
+  1.log transformation #it works well when data is left or right squed--(np.log(df[column])
+  2.Resiprocal transformation --(1/df[column])
+  3.Square_root transformation--(df[column]**(0.5)
+  4.BoxCox transformation--df['new column'],parameters=stat.boxcox(df[column])
+				
+				
+ 
+note:    when have 0 values in data -- log(0)=0 
+    	 so use log1p i.e (log(0+1)=log(1))
+    	 or u can use log(value + 1)
+    
+Note:    Boxcox must have +ve values
+
+
+Q]how to know whether data is Normally distributed or skewed ?
+--> if mean and median are same --> Normally distributed
+    if mean and median are not same -->skewed distributed  
+
+Q] why transformation of feature are requered ?
+->Linear_regression--Gradient discent--global minima
+  Algorithms like KNN ,Kmeans,Hierarchical clustering -->Euclidean distance
+  Every point has some vectors and Directions
+Deep learnig Techniques
+1.ANN--Gradient discent--Global minima
+2.CNN--(0-255 pixels)convert into(0-1)
+3.RNN
+
+Q]is transformation requered for each n every algorithm ?
+--> NO
+
+Q]is transformation requerdd in Ensemble techniques,Decision trees,bagging,boosting?
+--> NO
+
+Q] what is difference b/t fit and fit_transform
+-->when have to aaply algorithm and change data -->fit transform--use when data transformation(fit_transform in ML only in PCA)
+   basic ml model fiting -->fit
+
+Q] what u have will perform, standardization first or transformation first ?
+-->first check data is guassian(normal) distributed or not
+   if normally not distributed go and first perform Standardisation of data
+   if normally distributed u can perform directly transformation
+
+Q]how do you handle imbalanced dataset ?
+-->
+	use random forest classifier,where give class_weight={0:1,1:100}
+		RandomForestClassifier(class_weight=class_weight)
+	where has the much data in 0 then 0:1,it means give only 1% importance to 0,
+	and where has very less 1 value in data then 1:100,it means give 100 times more importance to 1.
+
+ --> if the data set is small, i will definatly go with under sampling,but again i will focus on 
+	performance matrix like precision,recall,f1-score, apart from focus on domain knowledge,based 
+	on that i will reduce ioc score.finaly i will do SMOTE technique,i will do over sampling technique
+	finally if this is not working i will go with Ensemble techniques like random forest,XGBoost.
+
+	1.random forest classifier technique
+    
+		Note: use it at last moment when your model dont work with other techniques 
+    		  under sampling,over sampling.
+		In Random Forest works heirarchy so imbalanced data doese not much effect.
+
+	2.under sampling
+   		 reduse the points of maximum label
+   		 it use only when have less amount of data
+    
+  		  Disadvantage
+   		 it looses too much data.
+   		 model accuracy reduces when data is too much imbalanced
+
+	3.Over sampling
+    
+   		 it is working good 
+
+	4.SMOTE technique
+    
+   		 it creates new points based on nearst point of lowest ratio label.
+    		it will try to create new points of least labels.
+
+	5.ensemble technique
+ 		In ensemble works heirarchy so imbalanced data doese not much effect.
+
+Q]which ML algorithms are impacted by outliers ?
+-->Outliers
+
+    in some cases outliers are also important(creditcard fraud detection)
+    only some of the ML algorithms are impacted by outliers
+    so when u keep outliers dont use these king of algorithm
+    
+    which ML models are very much sensitive to outliers ?
+    
+    1.Naive bayes                 -- NOT sensitive to outlier
+    2.SVM                         --NOT
+    3.LinearRegression            --YES
+    4.LogisticRegression          --YES
+    5.Decision Tree regressor or classifier --NOT
+    6.Ensmble (RF,XGBOOST,GB)     --NOT
+    7.Kmeans                    --YES
+    8.KNN                       --NOT
+    9.Heirarchical              --YES
+    10.PCA                      --YES (Very sensitive)
+    11.Neural Networks          --YES
+    12.LDA                      --YES
+    13.DBSCAN                   --YES 
+    
+NOTE : all unsupervised models impacted to outliers
+    
+
+Q]how to handle outliers if data follows Guassian or Normal Distribution ?
+-->#if data is normally distributed we use this 
+	#assumming age follows Guassian distribution, we will calculate boundaries which differentiat the 
+	outliers
+
+	upper_boundary=df['Age'].mean() + 3*df['Age'].std()
+	lower_boundary=df['Age'].mean() - 3*df['Age'].std()
+	#it can be do with Z-score
+	
+	and finally remove these outliers using feature engineering
+	data.loc[data['Age']>73,'Age']=73	#73-upper_bound
+	data.loc[data['Fare']>100,'Fare']=100	#100-upper_bound
+
+Q]how to handle outliers if data follows right or left skived ?
+-->IQR=df.Fare.quantile(0.75)-df.Fare.quantile(0.25)
+	lower_bridge=df.Fare.quantile(0.25)-(IQR*3)
+	upper_bridge=df.Fare.quantile(0.75)+(IQR*3)
+
+
+	#-----------now remove outliers--------------
+	data=df.copy()
+	data.loc[data['Age']>73,'Age']=73	#73-upper_bound
+	data.loc[data['Fare']>100,'Fare']=100	#100-upper_bound
+
